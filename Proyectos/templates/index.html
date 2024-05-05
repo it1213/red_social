@@ -39,7 +39,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        input[type="text"], input[type="password"], button {
+        input[type="text"], input[type="password"], select, button {
             width: 100%;
             margin-bottom: 10px;
             padding: 10px;
@@ -60,16 +60,39 @@
 <body>
     <div id="container">
         <div id="header">
-            <div class logo>
+            <div class="logo">
                 <img src="dducktito.png.png" width="100px" height="100px" alt="">
             </div>
         </div>
         <div id="content">
             <div id="login-form">
-                <h2>Iniciar Sesión</h2>
+                <h2>Encuesta de Preferencias</h2>
+                <input type="text" placeholder="Nombre">
                 <input type="text" placeholder="Correo electrónico">
                 <input type="password" placeholder="Contraseña">
-                <button onclick="window.location.href='/noticias'">Iniciar Sesión</button>
+                <select>
+                    <option value="" disabled selected>Selecciona tu edad</option>
+                    <option value="Menos de 18 años">Menos de 18 años</option>
+                    <option value="18-25 años">18-25 años</option>
+                    <option value="26-35 años">26-35 años</option>
+                    <option value="36-45 años">36-45 años</option>
+                    <option value="46-55 años">46-55 años</option>
+                    <option value="Más de 55 años">Más de 55 años</option>
+                </select>
+                <select>
+                    <option value="" disabled selected>Selecciona tu género</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <select multiple>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Música">Música</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Arte">Arte</option>
+                    <option value="Cocina">Cocina</option>
+                </select>
+                <button onclick="window.location.href='/noticias'">Enviar Encuesta</button>
             </div>
             <h2>Noticias</h2>
             <p>Aquí irían las noticias...</p>
