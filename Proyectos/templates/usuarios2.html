@@ -3,14 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Lista de Amigos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #1877f2;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .friend-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .friend {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .friend .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        .friend .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .friend .name {
+            font-weight: bold;
+            color: #1877f2;
+            margin-bottom: 5px;
+        }
+        .friend .interests {
+            color: #65676b;
+        }
+        .friend .actions {
+            margin-top: 10px;
+        }
+        .friend .actions a {
+            color: #1877f2;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .friend .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Lista de Usuarios</h1>
-    <ul>
-        {% for usuario in usuarios %}
-        <li>{{ usuario.id }} - {{ usuario.nombre }} - Intereses: {{ usuario.intereses }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Lista de Amigos</h1>
+        <ul class="friend-list">
+            {% for usuario in usuarios %}
+            <li class="friend">
+                <div class="avatar">
+                    <img src="https://via.placeholder.com/50" alt="Avatar">
+                </div>
+                <div class="info">
+                    <div class="name">{{ usuario.nombre }}</div>
+                    <div class="interests">Intereses: {{ usuario.intereses }}</div>
+                    <div class="actions">
+                        <a href="#"><i class="fas fa-comment"></i> Mensaje</a>
+                        <a href="#"><i class="fas fa-video"></i> Llamar</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
