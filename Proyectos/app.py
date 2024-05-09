@@ -1,9 +1,8 @@
 import pandas as pd
 import networkx as nx
+import matplotlib.pyplot as plt
 import random
 from faker import Faker
-from jinja2 import Environment, FileSystemLoader
-import matplotlib.pyplot as plt
 
 # Crear una instancia de Faker
 faker = Faker()
@@ -76,53 +75,39 @@ posibles_amigos = []
 for node in G.nodes():
     if node != nuevo_usuario_id and not G.has_edge(nuevo_usuario_id, node):  # Solo considerar nodos que no sean el nuevo usuario y que no estén ya conectados
         if G.nodes[node]['activo']:  # Solo considerar usuarios activos
-            posibles_amigos.append(G.nodes[node])
+            posibles_amigos.append(node)
 
-# Crear un entorno de Jinja2 con la ruta específica al directorio que contiene la plantilla
-file_loader = FileSystemLoader('C:/Users/itzco/OneDrive/Documentos/GitHub/red_social/templates')
-env = Environment(loader=file_loader)
+# Imprimir la lista de posibles amigos
+print("Lista de Posibles Nuevos Amigos:")
+for amigo in posibles_amigos:
+    usuario_info = G.nodes[amigo]
+    nombre_amigo = usuario_info['nombre']
+    edad_amigo = usuario_info['edad']
+    activo_amigo = usuario_info['activo']
+    intereses_amigo = ', '.join(usuario_info['intereses'])
+    print(f"ID: {amigo}, Nombre: {nombre_amigo}, Edad: {edad_amigo}, Activo: {'Sí' if activo_amigo else 'No'}, Intereses: {intereses_amigo}")
 
-# Cargar la plantilla HTML
-template = env.get_template('friends.html')
+# Visualizar el subgrafo
+plt.figure(figsize=(10, 6))
+pos = nx.spring_layout(subgrafo)
 
-# Renderizar la plantilla con los datos de los posibles amigos
-output = template.render(posibles_amigos=posibles_amigos)
+# Dibujar los nodos y las aristas
+node_colors = ['lightblue' if node == nuevo_usuario_id else 'red' if not G.nodes[node]['activo'] else 'lightgreen' for node in subgrafo.nodes()]
+nx.draw(subgrafo, pos, with_labels=True, node_color=node_colors, node_size=3000, font_size=8)
+nx.draw_networkx_edges(subgrafo, pos, edge_color='magenta', width=0.5)
 
-# Guardar el HTML renderizado en un archivo friends.html
-with open('friends.html', 'w') as f:
-    f.write(output)
+# Añadir etiquetas de nombres, edades, estado de actividad e intereses de usuario a los nodos
+for node, (x, y) in pos.items():
+    usuario_info = G.nodes[node]
+    nombre_usuario = usuario_info['nombre']
+    edad_usuario = usuario_info['edad']
+    activo_usuario = 'Activo' if usuario_info['activo'] else 'Inactivo'
+    intereses_usuario = ', '.join(usuario_info['intereses'])
+    etiqueta = f"{nombre_usuario}\nEdad: {edad_usuario}\nEstado: {activo_usuario}\nIntereses: {intereses_usuario}"
+    plt.text(x, y, etiqueta, fontsize=8, ha='center')
 
-# Ahora, agregamos el redireccionamiento al archivo friends.html
-redirect_code = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Friends</title>
-</head>
-<body>
-    <script>
-        // Redireccionar automáticamente a friends.html después de 3 segundos
-        setTimeout(function() {
-            window.location.href = "http://127.0.0.1:5500/templates/friends.html";
-        }, 3000); // Cambiar el valor a 3000 para redirigir después de 3 segundos
-    </script>
-    <p>Redirecting to Friends...</p>
-</body>
-</html>
-"""
+plt.title("Subgrafo con Nuevo Usuario y Conexiones")
+plt.axis('off')
 
-# Guardar el código de redireccionamiento en un archivo redirect.html
-with open('redirect.html', 'w') as f:
-    f.write(redirect_code)
-
-print("Se ha generado el archivo 'friends.html' con la lista de posibles amigos.")
-print("Se ha generado el archivo 'redirect.html' para redireccionar a friends.html.")
-
-# Dibujar el grafo
-plt.figure(figsize=(10, 8))
-nx.draw(subgrafo, with_labels=True, font_weight='bold')
-plt.title("Subgrafo de Posibles Amigos")
+# Mostrar el grafo
 plt.show()

@@ -66,39 +66,40 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js">
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Obtener el nombre del almacenamiento local
-            var nombre = localStorage.getItem("nombreUsuario");
-            // Actualizar el contenido HTML con el nombre
-            document.getElementById("nuevoUsuario").innerText = nombre;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener el número actual de seguidores del almacenamiento local
+        var followerCount = localStorage.getItem("followerCount");
+        // Actualizar el contenido HTML con el número actual de seguidores
+        document.querySelector('.stat-label').innerText = followerCount;
 
-            const form = document.querySelector('.post-form');
+        const form = document.querySelector('.post-form');
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-                const textarea = form.querySelector('#postContent');
-                const postContent = textarea.value.trim();
+            const textarea = form.querySelector('#postContent');
+            const postContent = textarea.value.trim();
 
-                if (postContent !== '') {
-                    // Obtener publicaciones existentes del almacenamiento local
-                    const publicaciones = JSON.parse(localStorage.getItem('publicaciones')) || [];
+            if (postContent !== '') {
+                // Obtener publicaciones existentes del almacenamiento local
+                const publicaciones = JSON.parse(localStorage.getItem('publicaciones')) || [];
 
-                    // Agregar la nueva publicación al array
-                    publicaciones.push(postContent);
+                // Agregar la nueva publicación al array
+                publicaciones.push(postContent);
 
-                    // Almacenar el array actualizado en el almacenamiento local
-                    localStorage.setItem('publicaciones', JSON.stringify(publicaciones));
+                // Almacenar el array actualizado en el almacenamiento local
+                localStorage.setItem('publicaciones', JSON.stringify(publicaciones));
 
-                    // Redirigir a la página de inicio
-                    window.location.href = 'index.html';
-                } else {
-                    alert('Por favor, escribe algo antes de publicar.');
-                }
-            });
+                // Redirigir a la página de inicio
+                window.location.href = 'index.html';
+            } else {
+                alert('Por favor, escribe algo antes de publicar.');
+            }
         });
-    </script>
+    });
+</script>
+
 </body>
 
 </html>
