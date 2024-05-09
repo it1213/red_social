@@ -3,20 +3,18 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import random
 
-# Definir una función para generar usuarios aleatorios
+# Definir una función para generar un usuario aleatorio con un único interés
 def generar_usuario():
     return {
-        'id': random.randint(1, 1000),
-        'nombre': f'Usuario_{random.randint(1, 100)}',
-        'intereses': random.sample(['Deportes', 'Música', 'Tecnología', 'Arte', 'Cocina',' '], random.randint(1, 3))
+        'id': random.randint(1001, 2000),
+        'nombre': f'Nuevo_Usuario_{random.randint(1, 100)}',
+        'intereses': [random.choice(['Deportes', 'Música', 'Tecnología', 'Arte', 'Cocina'])]
     }
 
-# Generar una lista de 100 usuarios aleatorios
-num_usuarios = 100
-usuarios = [generar_usuario() for _ in range(num_usuarios)]
-
-# Crear un DataFrame de Pandas con la información de los usuarios
-df_usuarios = pd.DataFrame(usuarios)
+# Generar un nuevo usuario aleatorio
+nuevo_usuario = generar_usuario()
+print("Nuevo usuario:")
+print(nuevo_usuario)
 
 # Crear un grafo utilizando NetworkX
 G = nx.Graph()
@@ -24,6 +22,9 @@ G = nx.Graph()
 # Agregar nodos al grafo con los usuarios
 for _, usuario in df_usuarios.iterrows():
     G.add_node(usuario['id'], nombre=usuario['nombre'], intereses=usuario['intereses'])
+
+# Agregar el nuevo usuario al grafo
+G.add_node(nuevo_usuario['id'], nombre=nuevo_usuario['nombre'], intereses=nuevo_usuario['intereses'])
 
 # Establecer conexiones entre usuarios con intereses similares
 for i, usuario1 in df_usuarios.iterrows():
@@ -43,6 +44,9 @@ for node, (x, y) in pos.items():
     intereses_usuario = ', '.join(df_usuarios[df_usuarios['id'] == node]['intereses'].iloc[0])
     plt.text(x, y + 0.05, intereses_usuario, fontsize=8, ha='center')
 
-plt.title("Red de Usuarios con Intereses Comunes")
-plt.show()
+# Añadimos etiquetas de intereses al nuevo usuario
+plt.text(pos[nuevo_usuario['id']][0], pos[nuevo_usuario['id']][1] + 0.05,
+         ', '.join(nuevo_usuario['intereses']), fontsize=8, ha='center')
 
+plt.title("Red de Usuarios con Intereses Comunes y Nuevo Usuario")
+plt.show()

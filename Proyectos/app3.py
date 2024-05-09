@@ -38,7 +38,7 @@ for i, usuario1 in df_usuarios.iterrows():
                 G.add_edge(usuario1['id'], usuario2['id'], intereses_comunes=intereses_comunes)
 
 # Guardar el grafo como imagen
-grafo_imagen_path = "static/grafo.png"
+grafo_imagen_path = os.path.join(os.getcwd(), 'Proyectos', 'grafo.png')
 plt.figure(figsize=(10, 6))
 pos = nx.spring_layout(G)  # Layout para posicionar los nodos
 nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=3000, edge_color='gray', linewidths=1, font_size=10)
