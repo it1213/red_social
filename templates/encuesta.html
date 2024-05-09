@@ -39,13 +39,15 @@
             event.preventDefault(); // Evitar el envío del formulario
             procesarEncuesta(); // Llamar a la función para procesar la encuesta
         });
-
+    </script>
+    <script>
         function procesarEncuesta() {
-            // Aquí puedes escribir el código para procesar los datos de la encuesta
-            // Por ejemplo, puedes enviar los datos del formulario a través de una solicitud HTTP
-            // Una vez que la encuesta esté procesada, puedes redirigir al usuario a otra página
-            window.location.href = "index.html"; // Redirigir al usuario a la página de inicio
+            var nombre = document.getElementById("nombre").value;
+            localStorage.setItem("nombreUsuario", nombre);
+            // Redirigir al usuario a la página de inicio
+            window.location.href = "index.html";
         }
     </script>
+    
 </body>
 </html>
