@@ -174,7 +174,25 @@ body {
     cursor: pointer;
 }
 
-/* Barra de navegación */
+.post {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.delete-btn {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
+
 .navbar {
     position: fixed;
     bottom: 0;
