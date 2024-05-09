@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Intereses</title>
+    <link rel="stylesheet" href="encuesta.css">
+</head>
+<body>
+    <h1>Encuesta de Intereses</h1>
+    <form id="encuestaForm" action="/encuesta" method="post">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="edad">Edad:</label><br>
+        <select id="edad" name="edad" required>
+            <option value="10-18">10-18</option>
+            <option value="19-25">19-25</option>
+            <option value="26-35">26-35</option>
+            <option value="36+">Más de 35</option>
+        </select><br>
+        <label>Intereses:</label><br>
+        <input type="checkbox" id="deportes" name="intereses[]" value="deportes">
+        <label for="deportes">Deportes</label><br>
+        <input type="checkbox" id="musica" name="intereses[]" value="musica">
+        <label for="musica">Música</label><br>
+        <input type="checkbox" id="tecnologia" name="intereses[]" value="tecnologia">
+        <label for="tecnologia">Tecnología</label><br>
+        <input type="checkbox" id="arte" name="intereses[]" value="arte">
+        <label for="arte">Arte</label><br>
+        <input type="checkbox" id="cocina" name="intereses[]" value="cocina">
+        <label for="cocina">Cocina</label><br>
+        <br>
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+        // Agregar un event listener para capturar el envío del formulario
+        document.getElementById("encuestaForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evitar el envío del formulario
+            procesarEncuesta(); // Llamar a la función para procesar la encuesta
+        });
+
+        function procesarEncuesta() {
+            // Aquí puedes escribir el código para procesar los datos de la encuesta
+            // Por ejemplo, puedes enviar los datos del formulario a través de una solicitud HTTP
+            // Una vez que la encuesta esté procesada, puedes redirigir al usuario a otra página
+            window.location.href = "index.html"; // Redirigir al usuario a la página de inicio
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Ducktito</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sección de Encuesta / Autenticación -->
+    <div class="authentication-section" id="encuesta" style="display: none;">
+        <h1>Bienvenido a Ducktito</h1>
+        <p>Antes de comenzar, necesitamos algunos detalles.</p>
+        <p>¿Cómo te llamas?</p>
+        <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+        <button onclick="mostrarSegundaSeccion()">Continuar</button>
+    </div>
+
+    <!-- Sección de Preferencias de Aparición -->
+    <div class="appearance-section" style="display: none;">
+        <h2>¡Hola, <span id="nombreMostrado"></span>!</h2>
+        <p>¿Cómo te gustaría aparecer en Ducktito?</p>
+        <input type="text" id="aparicion" placeholder="Ingresa tu apariencia">
+        <button onclick="finalizarEncuesta()">Finalizar</button>
+    </div>
+
+    <!-- Sección del Menú Principal (Mostrado después de la encuesta) -->
+    <div class="main-menu" style="display: none;">
+        <div class="head">
+            <div class="logo">
+                <a href="index.html" target="_blank">
+                    <img src="img/duckitologo.jpg" width="100px" height="100px" alt="">
+                </a>
+            </div>
+        </div>
+
+        <!-- Ejemplos de Publicaciones -->
+        <div class="post">
+            <!-- Publicación 1 -->
+            <div class="header">
+                <img src="img/profile_picture.webp" alt="Profile Picture">
+                <div class="username">Juan_Pérez</div>
+            </div>
+            <div class="content">
+                <img src="img/publicacion1.jpg" alt="Publicación">
+                <div class="caption">Me encanta el arroz con leche :p</div>
+            </div>
+            <div class="actions">
+                <button><ion-icon name="heart-outline"></ion-icon></button>
+                <button><ion-icon name="chatbox-ellipses-outline"></ion-icon></button>
+            </div>
+        </div>
+
+        <!-- Ejemplo de más Publicaciones -->
+        <div class="post">
+            <!-- Publicación 2 -->
+            <div class="header">
+                <img src="img/profile_picture.webp" alt="Profile Picture">
+                <div class="username">itz</div>
+            </div>
+            <div class="content">
+                <img src="img/publicacion2.jpg" alt="Publicación">
+                <div class="caption">Trikitracatelas, que dificil es programar.</div>
+            </div>
+            <div class="actions">
+                <button><ion-icon name="heart-outline"></ion-icon></button>
+                <button><ion-icon name="chatbox-ellipses-outline"></ion-icon></button>
+            </div>
+        </div>
+
+        <!-- Ejemplo de más Publicaciones -->
+        <div class="post">
+            <!-- Publicación 3 -->
+            <div class="header">
+                <img src="img/profile_picture.webp" alt="Profile Picture">
+                <div class="username">username</div>
+            </div>
+            <div class="content">
+                <img src="img/publicacion3.jpg" alt="Publicación">
+                <div class="caption">Acá los chómpiras rifan Y bailan tibiritábara</div>
+            </div>
+            <div class="actions">
+                <button><ion-icon name="heart-outline"></ion-icon></button>
+                <button><ion-icon name="chatbox-ellipses-outline"></ion-icon></button>
+            </div>
+        </div>
+
+        <div class="toe">
+            <div class="navbarD">
+                <a href="index.html" target="_blank">
+                    <img src="img/Home.png" width="20px" height="20px" alt="">
+                </a>
+
+                <a href="explore.html" target="_blank">
+                    <img src="img/lupa.png" width="20px" height="20px" alt="">
+                </a>
+
+                <a href="YourPost.html" target="_blank">
+                    <img src="img/tuperfil.png" width="20px" height="20px" alt="">
+                </a>
+
+                <a href="encuesta.html" target="_blank">
+                    <img src="img/amigos.png" width="20px" height="20px" alt=""> 
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>    
+
+    <script>
+        // Verificar si la encuesta ya se ha completado
+        var encuestaCompletada = localStorage.getItem("encuestaCompletada");
+        if (!encuestaCompletada) {
+            document.getElementById("encuesta").style.display = "block";
+        } else {
+            document.querySelector(".main-menu").style.display = "block";
+        }
+
+        function mostrarSegundaSeccion() {
+            var nombre = document.getElementById("nombre").value;
+            document.getElementById("nombreMostrado").innerText = nombre;
+            document.querySelector(".authentication-section").style.display = "none";
+            document.querySelector(".appearance-section").style.display = "block";
+        }
+
+        function finalizarEncuesta() {
+            var apariencia = document.getElementById("aparicion").value;
+            alert("¡Gracias por participar! Tu apariencia en Ducktito será: " + apariencia);
+            // Aquí puedes agregar código adicional para enviar los datos de la encuesta a un servidor o guardarlos en alguna parte.
+
+            // Ocultar la sección de la encuesta en el menú principal
+            document.querySelector(".authentication-section").style.display = "none";
+            document.querySelector(".main-menu").style.display = "block";
+
+            // Marcar la encuesta como completada en el almacenamiento local
+            localStorage.setItem("encuestaCompletada", true);
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Recuperar las publicaciones del almacenamiento local
+            const publicaciones = JSON.parse(localStorage.getItem('publicaciones')) || [];
+    
+            // Mostrar cada publicación en el menú principal
+            const mainMenu = document.querySelector('.main-menu');
+            publicaciones.forEach(publicacion => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.innerHTML = `
+                    <div class="header">
+                        <img src="img/profile_picture.webp" alt="Profile Picture">
+                        <div class="username">Tu Nombre</div>
+                    </div>
+                    <div class="content">
+                        <p>${publicacion}</p>
+                    </div>
+                    <div class="actions">
+                        <button><ion-icon name="heart-outline"></ion-icon></button>
+                        <button><ion-icon name="chatbox-ellipses-outline"></ion-icon></button>
+                    </div>
+                `;
+                mainMenu.appendChild(postElement);
+            });
+        });
+    </script>
+    
+</body>
+</html>
